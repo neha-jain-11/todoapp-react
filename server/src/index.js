@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const todoRouter = require("./routes/todos");
 const app = express();
 
@@ -8,6 +9,8 @@ app.use(
     origin: "http://localhost:8080",
   })
 );
+
+app.use(bodyParser.json());
 
 // app.use(todoRouter);
 app.use("/api/todos", todoRouter);

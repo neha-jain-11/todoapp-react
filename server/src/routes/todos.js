@@ -7,4 +7,10 @@ todoRouter.get("/get", (req, res) => {
   res.status(200);
 });
 
+todoRouter.post("/post", (req, res) => {
+  console.log("hi saving todos", req.body);
+  res.send("Saved");
+  res.status(200);
+});
+
 module.exports = todoRouter;

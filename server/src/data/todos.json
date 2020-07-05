@@ -1,10 +1,14 @@
 [
   {
+    "id": "one",
     "name": "one",
-    "description": "one"
+    "description": "one",
+    "status": false
   },
   {
+    "id": "two",
     "name": "two",
-    "description": "two"
+    "description": "two",
+    "status": false
   }
 ]
