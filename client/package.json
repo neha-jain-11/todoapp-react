@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --config jest.config.json --watch",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "start": "webpack-dev-server --open",
-    "validate": "eslint src/**/*.js src/**/*.jsx"
+    "validate": "eslint src/**/*.js src/**/*.jsx",
+    "e2e:generate:report": "mochawesome-merge cypress/results/*.json > cypress/results/output.json",
+    "e2e:coverage:report": "marge cypress/results/output.json --reportDir ./cypress/results --inline"
   },
   "author": "Neha",
   "license": "ISC",
@@ -26,6 +30,9 @@
     "html-webpack-plugin": "^4.3.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.1.0",
+    "marge": "^1.0.1",
+    "mochawesome": "^6.1.1",
+    "mochawesome-merge": "^4.1.0",
     "style-loader": "^1.2.1",
     "supertest": "^4.0.2",
     "webpack": "^4.43.0",
@@ -34,6 +41,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "cypress": "^4.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
