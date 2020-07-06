@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios from "axios";
 import AddItem from "./AddItem.jsx";
+import * as Todos from "../../services/todos";
 import ListItems from "./ListItems.jsx";
 import "./home.css";
 
@@ -19,9 +19,9 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    const res = await axios.get("/api/todos/get");
+    const data = await Todos.getTodos();
     this.setState({
-      data: res.data,
+      data,
     });
   }
 

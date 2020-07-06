@@ -15,8 +15,10 @@ app.use(bodyParser.json());
 // app.use(todoRouter);
 app.use("/api/todos", todoRouter);
 
-app.listen("3000", () => {
-  console.log("hi, i am listening on port 3000");
-});
+if (process.env.NODE_ENV !== "test") {
+  app.listen("3000", () => {
+    console.log("hi, i am listening on port 3000");
+  });
+}
 
 module.exports = app;
