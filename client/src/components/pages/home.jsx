@@ -55,6 +55,8 @@ class Home extends Component {
     this.setState({
       currentTodo: event.target.value,
     });
+
+    this.props.method2(event.target.value);
   }
 
   async saveTodos() {
@@ -90,12 +92,22 @@ const mapDispatchToProps = (dispatch) => {
         data: data,
       });
     },
+    method2: (data) => {
+      console.log("yooo 2");
+      return dispatch({
+        type: "SET_ITEM",
+        data: data,
+      });
+    },
   };
 };
 
 const mapStateToProps = (state) => {
   console.log("state", state);
-  return state;
+  return {
+    todos: state.todos.todos,
+    currentTodo: state.item.item,
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -2,11 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App.jsx";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import { todoReducer } from "./reducers/todo";
+import { createStore, combineReducers } from "redux";
+import { todoReducer, itemReducer } from "./reducers/todo";
 console.log("start");
 
-const store = new createStore(todoReducer);
+const combineReducer = combineReducers({
+  todos: todoReducer,
+  item: itemReducer,
+});
+const store = new createStore(combineReducer);
+// console.log(store.getState());
+
+// store.dispatch({
+//   type: "SET_ITEM",
+//   data: "Use Redux",
+// });
+// console.log(store.getState());
+
 const element = document.getElementById("root");
 ReactDOM.render(
   <Provider store={store}>
