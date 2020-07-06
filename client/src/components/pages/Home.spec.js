@@ -5,7 +5,7 @@ import AddItem from "./AddItem.jsx";
 import ListItems from "./ListItems.jsx";
 import * as Todos from "../../services/todos";
 
-describe("Home test", () => {
+describe.skip("Home test", () => {
   let wrapper;
   let mockService;
 

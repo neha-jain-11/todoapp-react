@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import AddItem from "./AddItem.jsx";
 import * as Todos from "../../services/todos";
 import ListItems from "./ListItems.jsx";
+import { addTodo } from "../../middlewares/thunk";
 import "./home.css";
 
 class Home extends Component {
@@ -21,7 +22,7 @@ class Home extends Component {
   async componentDidMount() {
     const data = await Todos.getTodos();
     console.log("yooo1");
-    this.props.method1(data);
+    this.props.method3(data);
   }
 
   addTodo() {
@@ -86,24 +87,24 @@ class Home extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     method1: (data) => {
-      console.log("yooo 2");
       return dispatch({
         type: "GET_TODOS",
         data: data,
       });
     },
     method2: (data) => {
-      console.log("yooo 2");
       return dispatch({
         type: "SET_ITEM",
         data: data,
       });
     },
+    method3: () => {
+      return dispatch(addTodo());
+    },
   };
 };
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
   return {
     todos: state.todos.todos,
     currentTodo: state.item.item,
