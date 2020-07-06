@@ -6,7 +6,7 @@ export const getTodos = async () => {
 };
 
 export const saveItems = async (data) => {
-  const res = await axios.post("/api/todos/post", {
+  await axios.post("/api/todos/post", {
     data,
   });
 };
