@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import AddItem from "./AddItem.jsx";
 import * as Todos from "../../services/todos";
 import ListItems from "./ListItems.jsx";
@@ -8,7 +9,6 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       currentTodo: "",
     };
     this.addTodo = this.addTodo.bind(this);
@@ -20,41 +20,35 @@ class Home extends Component {
 
   async componentDidMount() {
     const data = await Todos.getTodos();
-    this.setState({
-      data,
-    });
+    console.log("yooo1");
+    this.props.method1(data);
   }
 
   addTodo() {
     const currentTodo = this.state.currentTodo;
     this.setState({
-      data: [
-        ...this.state.data,
-        ...[{ id: currentTodo, name: currentTodo, description: currentTodo }],
-      ],
       currentTodo: "",
     });
+    this.props.method1([
+      ...this.props.todos,
+      ...[{ id: currentTodo, name: currentTodo, description: currentTodo }],
+    ]);
   }
 
   deleteTodo(event) {
     const id = event.target.dataset.id;
-    const index = this.state.data.findIndex((d) => d.id === id);
-    const cloneData = [...this.state.data];
+    const index = this.props.todos.findIndex((d) => d.id === id);
+    const cloneData = [...this.props.todos];
     cloneData.splice(index, 1);
-    this.setState({
-      data: cloneData,
-    });
+    this.props.method1(cloneData);
   }
 
   updateStatus(event) {
     const id = event.target.dataset.todoId;
-    const index = this.state.data.findIndex((d) => d.id === id);
-    const cloneData = [...this.state.data];
+    const index = this.props.todos.findIndex((d) => d.id === id);
+    const cloneData = [...this.props.todos];
     cloneData[index].status = !cloneData[index].status;
-    console.log("cloneData", cloneData);
-    this.setState({
-      data: cloneData,
-    });
+    this.props.method1(cloneData);
   }
 
   updateCurrentTodo(event) {
@@ -64,9 +58,7 @@ class Home extends Component {
   }
 
   async saveTodos() {
-    const res = await axios.post("/api/todos/post", {
-      data: this.state.data,
-    });
+    await Todos.saveItems(this.props.todos);
     alert("Saved, Please come back soon");
   }
 
@@ -79,7 +71,7 @@ class Home extends Component {
           updateCurrentTodo={this.updateCurrentTodo}
         />
         <ListItems
-          todos={this.state.data}
+          todos={this.props.todos}
           deleteTodo={this.deleteTodo}
           updateStatus={this.updateStatus}
         />
@@ -89,4 +81,21 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    method1: (data) => {
+      console.log("yooo 2");
+      return dispatch({
+        type: "GET_TODOS",
+        data: data,
+      });
+    },
+  };
+};
+
+const mapStateToProps = (state) => {
+  console.log("state", state);
+  return state;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
